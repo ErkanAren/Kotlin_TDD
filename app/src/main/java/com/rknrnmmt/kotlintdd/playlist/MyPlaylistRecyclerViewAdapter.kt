@@ -1,4 +1,4 @@
-package com.rknrnmmt.kotlintdd
+package com.rknrnmmt.kotlintdd.playlist
 
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
@@ -6,8 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-
-import com.rknrnmmt.kotlintdd.databinding.PlaylistItemBinding
+import com.rknrnmmt.kotlintdd.R
 
 
 class MyPlaylistRecyclerViewAdapter(val values:List<Playlist>) : RecyclerView.Adapter<MyPlaylistRecyclerViewAdapter.ViewHolder>() {

@@ -1,23 +1,22 @@
-package com.rknrnmmt.kotlintdd
+package com.rknrnmmt.kotlintdd.playlist
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.rknrnmmt.kotlintdd.R
 
 
 class PlaylistFragment : Fragment() {
 
-    lateinit var viewModel:PlaylistViewModel
+    lateinit var viewModel: PlaylistViewModel
     lateinit var viewModelFactory: PlaylistViewModelFactory
-
+    private val repository = PlaylistRepository()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -49,7 +48,7 @@ class PlaylistFragment : Fragment() {
     }
 
     private fun setupViewModel() {
-        viewModelFactory = PlaylistViewModelFactory()
+        viewModelFactory = PlaylistViewModelFactory(repository)
         viewModel = ViewModelProvider(this, viewModelFactory).get(PlaylistViewModel::class.java)
     }
 
