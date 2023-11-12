@@ -9,7 +9,7 @@ import android.widget.TextView
 import com.rknrnmmt.kotlintdd.R
 
 
-class MyPlaylistRecyclerViewAdapter(val values:List<Playlist>) : RecyclerView.Adapter<MyPlaylistRecyclerViewAdapter.ViewHolder>() {
+class MyPlaylistRecyclerViewAdapter(private val playlists:List<Playlist>) : RecyclerView.Adapter<MyPlaylistRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view: View = LayoutInflater.from(parent.context).inflate(R.layout.playlist_item, parent,false)
@@ -26,13 +26,13 @@ class MyPlaylistRecyclerViewAdapter(val values:List<Playlist>) : RecyclerView.Ad
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = values[position]
+        val item = playlists[position]
         holder.playlistName.text = item.name
         holder.playlistCategory.text = item.category
-        holder.playlistImage.setImageResource(item.image)
+        holder.playlistImage.setImageResource(R.mipmap.playlist)
     }
 
-    override fun getItemCount(): Int = 0//values.size
+    override fun getItemCount(): Int = playlists.size
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val playlistName: TextView = view.findViewById(R.id.playlist_name)
