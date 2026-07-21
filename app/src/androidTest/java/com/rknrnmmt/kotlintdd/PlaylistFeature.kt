@@ -9,6 +9,7 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.adevinta.android.barista.assertion.BaristaRecyclerViewAssertions.assertRecyclerViewItemCount
 import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
+import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertNotDisplayed
 import com.adevinta.android.barista.internal.matcher.DrawableMatcher.Companion.withDrawable
 import org.hamcrest.Description
 import org.hamcrest.Matcher
@@ -59,6 +60,13 @@ class PlaylistFeature {
     @Test
     fun displayLoaderWhileFetchingThePlaylists(){
         assertDisplayed(R.id.loader)
+    }
+
+    @Test
+    fun hidesLoader(){
+        Thread.sleep(4000)
+
+        assertNotDisplayed(R.id.loader)
     }
 
     // from parentview access the nth child
