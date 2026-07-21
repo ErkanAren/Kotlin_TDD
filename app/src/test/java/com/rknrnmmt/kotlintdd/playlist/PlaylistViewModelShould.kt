@@ -5,12 +5,15 @@ import com.nhaarman.mockitokotlin2.times
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import com.rknrnmmt.kotlintdd.utils.BaseUnitTest
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
 
 import org.junit.Assert.*
+import petros.efthymiou.groovy.utils.captureValues
 import petros.efthymiou.groovy.utils.getValueForTest
 
 /**
@@ -54,6 +57,28 @@ class PlaylistViewModelShould: BaseUnitTest() {
     fun emitPlaylistsFromRepository()= runTest {
         initialize()
         assertEquals(expected, viewModel.playlists.getValueForTest())
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
+    fun showSpinnerWhileLoading() = runTest {
+        val viewmodel = mockSuccessfulCase()
+
+
+        viewmodel.loader.captureValues {
+            viewmodel.playlists.getValueForTest()
+
+            advanceUntilIdle()
+
+            assertEquals(true, values[0])
+        }
+    }
+
+    private suspend fun mockSuccessfulCase(): PlaylistViewModel {
+        whenever(repository.getPlaylists()).thenReturn(
+            flow { emit(expected) }
+        )
+        return PlaylistViewModel(repository)
     }
 
     fun initialize(){

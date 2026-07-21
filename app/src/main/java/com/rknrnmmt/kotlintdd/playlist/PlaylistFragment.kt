@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
 import com.rknrnmmt.kotlintdd.R
@@ -32,13 +33,21 @@ class PlaylistFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.playlist_item_list, container, false)
+        val loader = view.findViewById<ProgressBar>(R.id.loader)
+        val list = view?.findViewById<RecyclerView>(R.id.playlists_list)
 
         setupViewModel()
 
+        viewModel.loader.observe(viewLifecycleOwner) { loading ->
+           when (loading) {
+               true -> loader.visibility = View.VISIBLE
+               else -> { loader.visibility = View.GONE }
+           }
+        }
         viewModel.playlists.observe(viewLifecycleOwner) { result ->
             if (result.getOrNull() != null) {
                 Log.i("mytag", "result is ok")
-                setupList(view, result.getOrNull()!!)
+                setupList(list, result.getOrNull()!!)
             } else {
                 Log.i("mytag", "something is wrong with the result")
             }
@@ -48,13 +57,13 @@ class PlaylistFragment : Fragment() {
     }
 
     private fun setupList(
-        view: View?,
+        list: RecyclerView?,
         playlists: List<Playlist>
     ) {
         Log.i("mytag","playlist size: "+playlists.size)
-        with(view as RecyclerView) {
-            layoutManager = LinearLayoutManager(context)
 
+        list?.run {
+            layoutManager = LinearLayoutManager(context)
             adapter = MyPlaylistRecyclerViewAdapter(playlists)
         }
     }
