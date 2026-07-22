@@ -10,7 +10,7 @@ class PlaylistMapperShould : BaseUnitTest() {
 
     private val mapper = PlaylistMapper()
     private val playlistsRaw = PlaylistRaw("1","name","","my category")
-    private val playlistsRawRock = PlaylistRaw("1","name","","rock")
+    private val playlistsRawRock = PlaylistRaw("1","name","rock","")
 
     private val playlist = mapper.invoke(listOf(playlistsRaw)).first()
 

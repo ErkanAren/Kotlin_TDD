@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -28,6 +29,7 @@ class PlaylistDetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_playlist_detail, container, false)
+        val loader = view.findViewById<ProgressBar>(R.id.loader)
         val title = view.findViewById<TextView>(R.id.playlist_title)
         val description = view.findViewById<TextView>(R.id.playlist_description)
 
@@ -35,10 +37,22 @@ class PlaylistDetailsFragment : Fragment() {
 
         viewModel.getPlaylistDetailsById(args.playlistId)
             .observe(viewLifecycleOwner) { result ->
-                val playlist = result.getOrNull()
-                title.setText(playlist?.name)
-                description.setText(playlist?.description)
+                if (result.getOrNull() != null) {
+                    val playlist = result.getOrNull()
+                    title.setText(playlist?.name)
+                    description.setText(playlist?.description)
+                } else {
+                    description.setText(getString(R.string.something_went_wrong))
+                }
             }
+
+        viewModel.loader.observe(viewLifecycleOwner) { visible ->
+            if(visible){
+                loader.visibility = View.VISIBLE
+            } else {
+                loader.visibility = View.GONE
+            }
+        }
 
         // Inflate the layout for this fragment
         return view

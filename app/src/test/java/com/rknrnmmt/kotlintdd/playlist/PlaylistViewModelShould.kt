@@ -63,7 +63,7 @@ class PlaylistViewModelShould: BaseUnitTest() {
     }
 
     @Test
-    fun showSpinnerWhileLoading() = runTest {
+    fun showLoaderWhileLoading() = runTest {
         val viewmodel = mockSuccessfulCase()
 
 

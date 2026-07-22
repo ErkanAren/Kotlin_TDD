@@ -9,6 +9,7 @@ import androidx.test.espresso.matcher.ViewMatchers.isDescendantOfA
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.adevinta.android.barista.interaction.BaristaListInteractions.clickListItem
 import com.rknrnmmt.kotlintdd.network.PlaylistHttpClient
 import org.hamcrest.Description
 import org.hamcrest.Matcher
@@ -52,6 +53,16 @@ abstract class BaseUITest {
                 isDescendantOfA(nthChildOf(withId(R.id.playlists_list), 0))
             )
         ).perform(click())
+    }
+
+    protected fun openFailingPlaylistDetails() {
+        clickListItem(R.id.playlists_list, 9)
+    }
+
+
+
+    protected fun stopWaitingForHttp() {
+        IdlingRegistry.getInstance().unregister(okHttpIdlingResource)
     }
 
     protected fun nthChildOf(
