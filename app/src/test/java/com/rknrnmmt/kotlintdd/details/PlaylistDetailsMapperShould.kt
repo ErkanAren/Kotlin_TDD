@@ -1,20 +1,21 @@
-package com.rknrnmmt.kotlintdd.playlist
+package com.rknrnmmt.kotlintdd.details
 
 import com.rknrnmmt.kotlintdd.R
 import com.rknrnmmt.kotlintdd.models.PlaylistRaw
+import com.rknrnmmt.kotlintdd.playlist.PlaylistMapper
 import com.rknrnmmt.kotlintdd.utils.BaseUnitTest
 import junit.framework.TestCase.assertEquals
 import org.junit.Test
 
-class PlaylistMapperShould : BaseUnitTest() {
+class PlaylistDetailsMapperShould : BaseUnitTest() {
 
-    private val mapper = PlaylistMapper()
+    private val mapper = PlaylistDetailsMapper()
     private val playlistsRaw = PlaylistRaw("1","name","","my category")
-    private val playlistsRawRock = PlaylistRaw("1","name","","rock")
+    private val playlistsRawRock = PlaylistRaw("1","name","rock","description1")
 
-    private val playlist = mapper.invoke(listOf(playlistsRaw)).first()
+    private val playlist = mapper.invoke(playlistsRaw)
 
-    private val playlistRock = mapper.invoke(listOf(playlistsRawRock)).first()
+    private val playlistRock = mapper.invoke(playlistsRawRock)
 
     @Test
     fun keepSameId(){
@@ -24,6 +25,11 @@ class PlaylistMapperShould : BaseUnitTest() {
     @Test
     fun keepSameName(){
         assertEquals(playlistsRaw.name, playlist.name)
+    }
+
+    @Test
+    fun keepSameDescription(){
+        assertEquals(playlistsRaw.description, playlist.description)
     }
 
     @Test

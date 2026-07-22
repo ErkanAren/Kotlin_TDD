@@ -1,4 +1,4 @@
-package com.rknrnmmt.kotlintdd.playlist
+package com.rknrnmmt.kotlintdd.network
 
 import dagger.Module
 import dagger.Provides

@@ -4,8 +4,8 @@ import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.times
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
-import com.rknrnmmt.kotlintdd.playlist.models.Playlist
-import com.rknrnmmt.kotlintdd.playlist.models.PlaylistRaw
+import com.rknrnmmt.kotlintdd.models.Playlist
+import com.rknrnmmt.kotlintdd.models.PlaylistRaw
 import com.rknrnmmt.kotlintdd.utils.BaseUnitTest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow

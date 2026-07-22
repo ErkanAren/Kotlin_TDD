@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.rknrnmmt.kotlintdd.R
-import com.rknrnmmt.kotlintdd.playlist.models.Playlist
+import com.rknrnmmt.kotlintdd.models.Playlist
 
 
 class MyPlaylistRecyclerViewAdapter(

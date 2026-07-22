@@ -1,7 +1,7 @@
 package com.rknrnmmt.kotlintdd.playlist
 
 import androidx.lifecycle.*
-import com.rknrnmmt.kotlintdd.playlist.models.Playlist
+import com.rknrnmmt.kotlintdd.models.Playlist
 import kotlinx.coroutines.flow.onEach
 
 class PlaylistViewModel (
@@ -18,5 +18,4 @@ class PlaylistViewModel (
             }
             .asLiveData())
     }
-
 }

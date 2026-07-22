@@ -12,7 +12,7 @@ import android.widget.ProgressBar
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.rknrnmmt.kotlintdd.R
-import com.rknrnmmt.kotlintdd.playlist.models.Playlist
+import com.rknrnmmt.kotlintdd.models.Playlist
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

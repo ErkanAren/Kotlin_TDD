@@ -1,4 +1,4 @@
-package com.rknrnmmt.kotlintdd.playlist
+package com.rknrnmmt.kotlintdd.details
 
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.times
@@ -16,37 +16,34 @@ import org.junit.Assert.*
 import petros.efthymiou.groovy.utils.captureValues
 import petros.efthymiou.groovy.utils.getValueForTest
 
-/**
- * Example local unit test, which will execute on the development machine (host).
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
-@OptIn(ExperimentalCoroutinesApi::class)
-class PlaylistViewModelShould: BaseUnitTest() {
 
-    private val repository: PlaylistRepository = mock()
-    private val playlists = mock<List<Playlist>>()
-    private val expected = Result.success(playlists)
+@OptIn(ExperimentalCoroutinesApi::class)
+class PlaylistDetailsViewModelShould: BaseUnitTest() {
+
+    private val repository: PlaylistDetailsRepository = mock()
+    private val playlist = mock<Playlist>()
+    private val expected = Result.success(playlist)
     private val exception = RuntimeException("Something went wrong")
 
-    private lateinit var viewModel: PlaylistViewModel
+    private lateinit var viewModel: PlaylistDetailsViewModel
 
+    private val id = "1"
 
     @Test
-    fun getPlaylistsFromRepository() = runTest {
+    fun getPlaylistDetailsFromRepository() = runTest {
         viewModel = mockSuccessfulCase()
 
-        viewModel.playlists.captureValues {
+        viewModel.getPlaylistDetailsById(id).captureValues {
             advanceUntilIdle()
         }
-        verify(repository, times(1)).getPlaylists()
+        verify(repository, times(1)).getPlaylistDetailsById("1")
     }
 
     @Test
     fun emitErrorWhenReceiveError() = runTest {
         viewModel = mockErrorCase()
 
-        viewModel.playlists.captureValues {
+        viewModel.getPlaylistDetailsById(id).captureValues {
             advanceUntilIdle()
             assertEquals(exception, values.last()!!.exceptionOrNull())
         }
@@ -56,7 +53,7 @@ class PlaylistViewModelShould: BaseUnitTest() {
     fun emitPlaylistsFromRepository()= runTest {
         viewModel = mockSuccessfulCase()
 
-        viewModel.playlists.captureValues {
+        viewModel.getPlaylistDetailsById(id).captureValues {
             advanceUntilIdle()
             assertEquals(expected, values.last())
         }
@@ -68,7 +65,7 @@ class PlaylistViewModelShould: BaseUnitTest() {
 
 
         viewmodel.loader.captureValues {
-            viewmodel.playlists.getValueForTest()
+            viewmodel.getPlaylistDetailsById(id).getValueForTest()
 
             advanceUntilIdle()
 
@@ -81,7 +78,7 @@ class PlaylistViewModelShould: BaseUnitTest() {
         val viewmodel = mockSuccessfulCase()
 
         viewmodel.loader.captureValues {
-            viewmodel.playlists.captureValues {
+            viewmodel.getPlaylistDetailsById(id).captureValues {
                 advanceUntilIdle()
             }
 
@@ -94,7 +91,7 @@ class PlaylistViewModelShould: BaseUnitTest() {
         val viewmodel = mockErrorCase()
 
         viewmodel.loader.captureValues {
-            viewmodel.playlists.captureValues {
+            viewmodel.getPlaylistDetailsById(id).captureValues {
                 advanceUntilIdle()
             }
 
@@ -102,17 +99,17 @@ class PlaylistViewModelShould: BaseUnitTest() {
         }
     }
 
-    private suspend fun mockErrorCase(): PlaylistViewModel {
-        whenever(repository.getPlaylists()).thenReturn(
-            flow { emit(Result.failure<List<Playlist>>(exception)) }
+    private suspend fun mockErrorCase(): PlaylistDetailsViewModel {
+        whenever(repository.getPlaylistDetailsById(id)).thenReturn(
+            flow { emit(Result.failure<Playlist>(exception)) }
         )
-        return PlaylistViewModel(repository)
+        return PlaylistDetailsViewModel(repository)
     }
 
-    private suspend fun mockSuccessfulCase(): PlaylistViewModel {
-        whenever(repository.getPlaylists()).thenReturn(
+    private suspend fun mockSuccessfulCase(): PlaylistDetailsViewModel {
+        whenever(repository.getPlaylistDetailsById(id)).thenReturn(
             flow { emit(expected) }
         )
-        return PlaylistViewModel(repository)
+        return PlaylistDetailsViewModel(repository)
     }
 }
