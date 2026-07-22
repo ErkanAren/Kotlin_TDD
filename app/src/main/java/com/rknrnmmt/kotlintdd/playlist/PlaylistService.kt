@@ -1,6 +1,6 @@
 package com.rknrnmmt.kotlintdd.playlist
 
-import kotlinx.coroutines.delay
+import com.rknrnmmt.kotlintdd.playlist.models.PlaylistRaw
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
@@ -11,9 +11,8 @@ import javax.inject.Inject
 class PlaylistService @Inject constructor(
     private val playlistAPI:PlaylistAPI
 ){
-    suspend fun fetchPlaylists():Flow<Result<List<Playlist>>> {
+    suspend fun fetchPlaylists():Flow<Result<List<PlaylistRaw>>> {
         return flow{
-            delay(1000)
             emit(Result.success(playlistAPI.fetchPlaylists()))
         }.catch {
             emit(Result.failure(RuntimeException("Something went wrong")))

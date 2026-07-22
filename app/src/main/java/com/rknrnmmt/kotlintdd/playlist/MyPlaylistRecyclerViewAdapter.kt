@@ -7,9 +7,13 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.rknrnmmt.kotlintdd.R
+import com.rknrnmmt.kotlintdd.playlist.models.Playlist
 
 
-class MyPlaylistRecyclerViewAdapter(private val playlists:List<Playlist>) : RecyclerView.Adapter<MyPlaylistRecyclerViewAdapter.ViewHolder>() {
+class MyPlaylistRecyclerViewAdapter(
+    private val playlists:List<Playlist>,
+    private val listener: (String) -> Unit
+    ) : RecyclerView.Adapter<MyPlaylistRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view: View = LayoutInflater.from(parent.context).inflate(R.layout.playlist_item, parent,false)
@@ -29,7 +33,9 @@ class MyPlaylistRecyclerViewAdapter(private val playlists:List<Playlist>) : Recy
         val item = playlists[position]
         holder.playlistName.text = item.name
         holder.playlistCategory.text = item.category
-        holder.playlistImage.setImageResource(R.mipmap.playlist)
+        holder.playlistImage.setImageResource(item.image)
+
+        holder.root.setOnClickListener { listener(item.id) }
     }
 
     override fun getItemCount(): Int = playlists.size
@@ -38,6 +44,7 @@ class MyPlaylistRecyclerViewAdapter(private val playlists:List<Playlist>) : Recy
         val playlistName: TextView = view.findViewById(R.id.playlist_name)
         val playlistCategory: TextView = view.findViewById(R.id.playlist_category)
         val playlistImage: ImageView = view.findViewById(R.id.playlist_image)
+        val root: View = view.findViewById(R.id.playlist_item_root)
 
         override fun toString(): String {
             return super.toString() //+ " '" + contentView.text + "'"

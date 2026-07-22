@@ -8,6 +8,10 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+object PlaylistHttpClient {
+    val instance: OkHttpClient = OkHttpClient()
+}
+
 @Module
 @InstallIn(FragmentComponent::class)
 class PlaylistModule {
@@ -20,7 +24,7 @@ class PlaylistModule {
     fun retrofit() : Retrofit =
         Retrofit.Builder()
             .baseUrl("http://10.0.2.2:49999/")
-            .client(OkHttpClient())
+            .client(PlaylistHttpClient.instance)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 

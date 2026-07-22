@@ -1,8 +1,8 @@
 package com.rknrnmmt.kotlintdd.playlist
 
 import androidx.lifecycle.*
+import com.rknrnmmt.kotlintdd.playlist.models.Playlist
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 
 class PlaylistViewModel (
     private val repository: PlaylistRepository
